@@ -13,21 +13,20 @@ namespace IvanovaAvtoservice
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Ivanova_carserviceEntities1 : DbContext
+    public partial class Ivanova_carserviceEntities : DbContext
     {
-        public Ivanova_carserviceEntities1()
-            : base("name=Ivanova_carserviceEntities1")
-        {
-        }
-        public static Ivanova_carserviceEntities1 _context;
-        public static Ivanova_carserviceEntities1 GetContext()
+        private static Ivanova_carserviceEntities _context;
+        public static Ivanova_carserviceEntities GetContext()
         {
             if (_context == null)
-                _context = new Ivanova_carserviceEntities1();
-
+                _context = new Ivanova_carserviceEntities();
             return _context;
         }
-
+        public Ivanova_carserviceEntities()
+            : base("name=Ivanova_carserviceEntities")
+        {
+        }
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -43,7 +42,6 @@ namespace IvanovaAvtoservice
         public virtual DbSet<ProductSale> ProductSale { get; set; }
         public virtual DbSet<ServicePhoto> ServicePhoto { get; set; }
         public virtual DbSet<Servisee> Servisee { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Tag> Tag { get; set; }
     }
 }

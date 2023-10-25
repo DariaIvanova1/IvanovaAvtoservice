@@ -41,31 +41,42 @@ namespace IvanovaAvtoservice
             if (string.IsNullOrWhiteSpace(_currentServise.Title))
                 errors.AppendLine("Укажите название услуги");
             if (_currentServise.Cost==0)
-                errors.AppendLine("Укажит стоимость услуги");
+                errors.AppendLine("Укажите стоимость услуги");
             if ( _currentServise.Discount== null)
                 errors.AppendLine("Укажите скидку");
-            if (string.IsNullOrWhiteSpace(_currentServise.DurationIn))
-                errors.AppendLine("Укажие длительность услуги");
-            if(errors.Length > 0)
+            if (_currentServise.Duration > 240)
+                errors.AppendLine("Длительность не может быть больше 240 минут");
+            if (errors.Length > 0)
             {
                 MessageBox.Show(errors.ToString());
                 return;
             }
-            if (_currentServise.ID ==0)
+            var allServices = Ivanova_carserviceEntities.GetContext().Servisee.ToList();
+            // Исключаем текущую услугу из списка всех услуг
+            allServices = allServices.Where(p => p.ID != _currentServise.ID && p.Title == _currentServise.Title).ToList();
+            if (allServices.Count == 0)
             {
-                Ivanova_carserviceEntities1.GetContext().Servisee.Add(_currentServise);
+                if (_currentServise.ID == 0)
+                {
+                    Ivanova_carserviceEntities.GetContext().Servisee.Add(_currentServise);
 
+                }
+                try
+                {
+                    Ivanova_carserviceEntities.GetContext().SaveChanges();
+                    MessageBox.Show("Информация сохранена");
+                    Manager.MainFrame.GoBack();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
             }
-            try
+            else
             {
-                Ivanova_carserviceEntities1.GetContext().SaveChanges();
-                MessageBox.Show("Информация сохранена");
-                Manager.MainFrame.GoBack();
+                MessageBox.Show("Уже существует такая услуга");
             }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
+            
         }
     }
 }

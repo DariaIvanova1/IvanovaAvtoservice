@@ -110,23 +110,13 @@
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="MainImagePath" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-    <Property Name="DurationIn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MainImagePath" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Duration" Type="Int32" Nullable="false" />
     <Property Name="Cost" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-    <Property Name="Discount" Type="Double" />
-    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Discount" Type="Int32" />
+    <Property Name="Drscription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="ClientService" Relationship="Self.FK_ClientService_Servisee" FromRole="Servisee" ToRole="ClientService" />
     <NavigationProperty Name="ServicePhoto" Relationship="Self.FK_ServicePhoto_Servisee" FromRole="Servisee" ToRole="ServicePhoto" />
-  </EntityType>
-  <EntityType Name="sysdiagrams">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="principal_id" Type="Int32" Nullable="false" />
-    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="Int32" />
-    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
   <EntityType Name="Tag">
     <Key>
@@ -253,7 +243,7 @@
     <End Role="client" Type="Self.client" Multiplicity="*" />
     <End Role="Tag" Type="Self.Tag" Multiplicity="*" />
   </Association>
-  <EntityContainer Name="Ivanova_carserviceEntities1" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="Ivanova_carserviceEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="client" EntityType="Self.client" />
     <EntitySet Name="ClientService" EntityType="Self.ClientService" />
     <EntitySet Name="DocumentByService" EntityType="Self.DocumentByService" />
@@ -264,7 +254,6 @@
     <EntitySet Name="ProductSale" EntityType="Self.ProductSale" />
     <EntitySet Name="ServicePhoto" EntityType="Self.ServicePhoto" />
     <EntitySet Name="Servisee" EntityType="Self.Servisee" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
     <EntitySet Name="Tag" EntityType="Self.Tag" />
     <AssociationSet Name="FK_client_Gender" Association="Self.FK_client_Gender">
       <End Role="Gender" EntitySet="Gender" />

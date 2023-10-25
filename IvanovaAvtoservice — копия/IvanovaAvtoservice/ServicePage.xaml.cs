@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,7 +28,7 @@ namespace IvanovaAvtoservice
         public ServicePage()
         {
             InitializeComponent();
-            var currentServisee = Ivanova_carserviceEntities1.GetContext().Servisee.ToList();
+            var currentServisee = Ivanova_carserviceEntities.GetContext().Servisee.ToList();
             ServiceListView.ItemsSource = currentServisee;
             ComboType.SelectedIndex = 0;
             UpdateServices();
@@ -36,7 +37,7 @@ namespace IvanovaAvtoservice
         }
         private void UpdateServices()
         {
-            var currentServisee = Ivanova_carserviceEntities1.GetContext().Servisee.ToList();
+            var currentServisee = Ivanova_carserviceEntities.GetContext().Servisee.ToList();
             if (ComboType.SelectedIndex == 0)
             { currentServisee = currentServisee.Where(p => (p.Discount >= 0 && p.Discount <= 100)).ToList(); }
             if (ComboType.SelectedIndex == 1)
@@ -108,16 +109,18 @@ namespace IvanovaAvtoservice
 
         private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (Visibility == Visibility.Visible) {
-                Ivanova_carserviceEntities1.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
-                ServiceListView.ItemsSource = Ivanova_carserviceEntities1.GetContext().Servisee.ToList();
+            var context = Ivanova_carserviceEntities.GetContext();
+            foreach (var entry in context.ChangeTracker.Entries().Where(p => p.State != EntityState.Added).ToList())
+            {
+                entry.Reload();
             }
+            ServiceListView.ItemsSource = context.Servisee.ToList();
         }
-
+      
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             var currentService = (sender as Button).DataContext as Servisee;
-            var currentClientServices = Ivanova_carserviceEntities1.GetContext().ClientService.ToList();
+            var currentClientServices = Ivanova_carserviceEntities.GetContext().ClientService.ToList();
             currentClientServices = currentClientServices.Where(p => p.ServiceID == currentService.ID).ToList();
             if (currentClientServices.Count != 0)
             {
@@ -130,10 +133,10 @@ namespace IvanovaAvtoservice
                 {
                     try
                     {
-                        Ivanova_carserviceEntities1.GetContext().Servisee.Remove(currentService);
-                        Ivanova_carserviceEntities1.GetContext().SaveChanges();
+                        Ivanova_carserviceEntities.GetContext().Servisee.Remove(currentService);
+                        Ivanova_carserviceEntities.GetContext().SaveChanges();
 
-                        ServiceListView.ItemsSource = Ivanova_carserviceEntities1.GetContext().Servisee.ToList();
+                        ServiceListView.ItemsSource = Ivanova_carserviceEntities.GetContext().Servisee.ToList();
 
                         UpdateServices();
                     }
@@ -245,5 +248,12 @@ namespace IvanovaAvtoservice
         {
             ChangePage(2, null);
         }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.Navigate(new SingUpPage((sender as Button).DataContext as Servisee));
+        }
+
+        
     }
 }

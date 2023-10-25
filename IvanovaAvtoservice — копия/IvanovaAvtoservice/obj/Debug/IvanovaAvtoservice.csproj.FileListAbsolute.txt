@@ -72,4 +72,5 @@ D:\AvtoSer\IvanovaAvtoservice — копия\IvanovaAvtoservice\obj\Debug\Ivanov
 D:\AvtoSer\IvanovaAvtoservice — копия\IvanovaAvtoservice\obj\Debug\IvanovaAvtoservice.csproj.CopyComplete
 D:\AvtoSer\IvanovaAvtoservice — копия\IvanovaAvtoservice\obj\Debug\IvanovaAvtoservice.exe
 D:\AvtoSer\IvanovaAvtoservice — копия\IvanovaAvtoservice\obj\Debug\IvanovaAvtoservice.pdb
-D:\AvtoSer\IvanovaAvtoservice — копия\IvanovaAvtoservice\obj\Debug\IvanovaAvtoservice.csproj.SuggestedBindingRedirects.cache
+D:\AvtoSer\IvanovaAvtoservice — копия\IvanovaAvtoservice\obj\Debug\SingUpPage.g.cs
+D:\AvtoSer\IvanovaAvtoservice — копия\IvanovaAvtoservice\obj\Debug\SingUpPage.baml
